@@ -2,6 +2,8 @@
 """
 Senior Data Scientist.: Dr. Eddy Giusepe Chirinos Isidro
 
+Este tutorial está baseado no vídeo de Dave Ebbelaar.
+
 How to get your Data ready for AI Agents (Docs, PDFs, Websites, etc.)
 =====================================================================
 Aqui começamos com a extração de dados de um PDF usando a biblioteca Docling.
@@ -17,7 +19,9 @@ converter = DocumentConverter()
 # Basic PDF extraction
 # --------------------------------------------------------------
 
-result = converter.convert("/home/eddygiusepe/1_github/Building_Knowledge_Extraction_Pipeline_with_Docling/data/Docling_Technical_Report.pdf")
+result = converter.convert(
+    "/home/eddygiusepe/1_github/Building_Knowledge_Extraction_Pipeline_with_Docling/data/Docling_Technical_Report.pdf"
+)
 
 document = result.document
 markdown_output = document.export_to_markdown()
