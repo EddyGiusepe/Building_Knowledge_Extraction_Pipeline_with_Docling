@@ -48,4 +48,3 @@ class OpenAITokenizerWrapper(PreTrainedTokenizerBase):
     def from_pretrained(cls, *args, **kwargs):
         """Método de classe para corresponder à interface HuggingFace."""
         return cls()
-    
