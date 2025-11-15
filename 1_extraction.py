@@ -15,7 +15,8 @@ Link de estudo --> https://www.youtube.com/watch?v=9lBTS5dM27c
 from docling.document_converter import DocumentConverter, PdfFormatOption
 from docling.datamodel.base_models import InputFormat
 from docling.datamodel.pipeline_options import PdfPipelineOptions#, RapidOcrOptions
-from docling.datamodel.pipeline_options import EasyOcrOptions
+from docling.datamodel.pipeline_options import RapidOcrOptions # EasyOcrOptions
+from docling_core.types.doc import ImageRefMode
 # from utils.sitemap import get_sitemap_urls  # Para processar múltiplas URLs
 
 # ==============================================================================
@@ -36,18 +37,18 @@ from docling.datamodel.pipeline_options import EasyOcrOptions
 # Aplica OCR APENAS nas imagens (mais rápido)
 pipeline_options = PdfPipelineOptions(
     do_ocr=True,                    # ✅ Habilitar OCR em imagens
-    ocr_options=EasyOcrOptions( #RapidOcrOptions(
+    ocr_options=RapidOcrOptions(#EasyOcrOptions( #RapidOcrOptions(
         lang=['pt', 'en'],
-        use_gpu=False,
-        #text_score=0.6, # 60% de confiança para extrair texto
-        #print_verbose=True, # Imprimir informações de OCR
+        #use_gpu=False,
+        text_score=0.7, # 60% de confiança para extrair texto
+        print_verbose=True, # Imprimir informações de OCR
         force_full_page_ocr=False,  # Seletivo: OCR apenas em imagens
         bitmap_area_threshold=0.02,  # 5% da área da página
     ),
     do_table_structure=True,        # ✅ Detectar estrutura de tabelas
-    generate_picture_images=True,   # ✅ Extrair imagens do PDF
+    generate_picture_images=False,   # ✅ Extrair imagens do PDF
     do_picture_classification=True, # ✅ Classificar imagens
-    do_picture_description=True, # ✅ Gerar descrição de imagens
+    do_picture_description=False, # ✅ Gerar descrição de imagens
     images_scale=0.5, # 50% da escala da imagem
     do_code_enrichment=True, # ✅ Extrair código
     do_formula_enrichment=True, # ✅ Extrair fórmulas matemáticas
@@ -90,7 +91,7 @@ print("   - Extraindo tabelas e figuras\n")
 
 # Converter o PDF
 result = converter.convert(
-    "/home/eddygiusepe/2_GitHub/Building_Knowledge_Extraction_Pipeline_with_Docling/data/Docling_Technical_Report.pdf"
+    "/home/eddygiusepe/2_GitHub/Building_Knowledge_Extraction_Pipeline_with_Docling/data/Data_Science_Eddy_pt.pdf"
 )
 
 # ==============================================================================
@@ -130,11 +131,19 @@ result = converter.convert(
 # """
 
 markdown_output = result.document.export_to_markdown(
-    image_placeholder="[🖼️ IMAGEM]"  # Marcação para figuras/fotos (não texto)
+    image_placeholder="[🖼️ IMAGEM]",  # Marcação para figuras/fotos (não texto)
+    escape_html=True,
+    escape_underscores=True,
+    #indent=4,
+    enable_chart_tables=True,
+    image_mode=ImageRefMode.PLACEHOLDER,
+    include_annotations=False,
+    mark_annotations=False,
+    page_break_placeholder=None
 )
 
 # Salvar o markdown em arquivo
-output_path = "/home/eddygiusepe/2_GitHub/Building_Knowledge_Extraction_Pipeline_with_Docling/data/Docling_Technical_Report.md"
+output_path = "/home/eddygiusepe/2_GitHub/Building_Knowledge_Extraction_Pipeline_with_Docling/data/Eddy_Data_Science_pt.md"
 with open(output_path, "w", encoding="utf-8") as f:
     f.write(markdown_output)
 
