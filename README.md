@@ -1,4 +1,4 @@
-# <h1 align="center"><font color="red">Building_Knowledge_Extraction_Pipeline_with_Docling</font></h1>
+# <h1 align="center"><font color="red">Building Knowledge Extraction Pipeline with Docling</font></h1>
 
 <font color="pink">Senior Data Scientist.: Dr. Eddy Giusepe Chirinos Isidro</font>
 
@@ -38,6 +38,10 @@ pip install -r requirements.txt
 ou
 
 uv sync
+
+ou
+
+uv add docling
 ```
 2. Configure suas variáveis ​​de ambiente criando um arquivo ``.env``:
 
